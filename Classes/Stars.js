@@ -20,7 +20,7 @@ class Stars extends GameObject {
 
         this.sprites = {
             rocket: {
-                src: '/Assets/rocket.png',
+                src: '../Assets/rocket.png',
                 frames: 4,
                 fps: 4,
                 image: null,
