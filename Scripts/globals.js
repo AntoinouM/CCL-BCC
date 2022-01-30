@@ -58,6 +58,9 @@ const GAME = {
     highScore: 0,
 }
 
+const passingPlanet = new Image();
+passingPlanet.src = '../Assets/passingPlanet.png';
+
 const VERTICAL_FORCE = 0.62;
 const horizonHeight = HERO.height / 2 - 5;
 const MAX_DISTANCE = 450;
@@ -79,4 +82,5 @@ export {
     BONUS,
     GAME,
     MOUSE,
+    passingPlanet,
 };

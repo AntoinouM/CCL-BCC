@@ -3,7 +3,7 @@ import {
     CONFIG,
     BONUS,
     GAME,
-    HERO
+    passingPlanet
 } from '../Scripts/globals.js'
 
 class Stars extends GameObject {
@@ -36,9 +36,6 @@ class Stars extends GameObject {
             sprite.image = new Image();
             sprite.image.src = sprite.src;
         })
-
-        this.imageP = new Image();
-        this.imageP.src = '../Assets/passingPlanet.png';
 
     };
 
@@ -109,7 +106,7 @@ class Stars extends GameObject {
             this.context.resetTransform();
         } else {
             this.context.translate(this.x, this.y);
-            this.context.drawImage(this.imageP, -100, 100, 100, 100)
+            this.context.drawImage(passingPlanet, -100, 100, 100, 100)
             this.context.resetTransform();
         }
     }
