@@ -33,6 +33,12 @@ const CLOUDS = {
     sizeDelta: 1,
 }
 
+const ANIM = {
+    planetApparitionTimeMin: 15000,
+    planetApparitionTimeMax: 25000,
+    planetCounter: 8000,
+}
+
 const BONUS = {
     width: 47,
     height: 47,
@@ -83,4 +89,5 @@ export {
     GAME,
     MOUSE,
     passingPlanet,
+    ANIM,
 };

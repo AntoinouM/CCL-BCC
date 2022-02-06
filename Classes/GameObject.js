@@ -1,3 +1,8 @@
+import {
+    CONFIG,
+
+} from '../Scripts/globals.js'
+
 class GameObject {
 
   constructor(context, canvas, x, y, width, height, CONFIG) {
@@ -21,7 +26,7 @@ class GameObject {
 
   render() {
 
-    if (this.CONFIG.debug) {
+    if (CONFIG.debug) {
       this.context.lineWidth = 4;
 
       let bb = this.getBoundingBox();

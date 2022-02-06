@@ -1,8 +1,9 @@
 import Player from '../Classes/Player.js';
 import Collectible from '../Classes/Collectible.js';
 import Buttons from '../Classes/Buttons.js';
-import Stars from '../Classes/Stars.js';
 import Backgrounds from '../Classes/Backgrounds.js';
+import Bonuses from '../Classes/Bonuses.js';
+import BackgroundAnimation from '../Classes/BackgroundAnimation..js';
 import RandomDispatcher, {
   randomNumberBetween
 } from './RandomDispatcher.js';
@@ -19,6 +20,7 @@ import {
   GAME,
   BONUS,
   MOUSE,
+  ANIM,
 } from './globals.js'
 import {
   switchState
@@ -75,7 +77,7 @@ const init = function () {
 
   let randomDispatcherStar = new RandomDispatcher(function () {
     let randomStarX = randomNumberBetween(8, CONFIG.width - 8);
-    let star = new Stars(context, canvas, randomStarX, 0, 10, 10, 1, CONFIG)
+    let star = new BackgroundAnimation(context, canvas, randomStarX, 0, 10, 10, 1, CONFIG)
     GAME.gameObjects.push(star);
   }, {
     min: 200,
@@ -84,7 +86,7 @@ const init = function () {
 
   let randomPlanet = new RandomDispatcher(function () {
     let randomStarY = randomNumberBetween(100, CONFIG.height / 3);
-    let backgrndPlanet = new Stars(context, canvas, 0, randomStarY, 10, 10, 3, CONFIG)
+    let backgrndPlanet = new BackgroundAnimation(context, canvas, 0, randomStarY, 10, 10, 3, CONFIG)
     GAME.gameObjects.push(backgrndPlanet);
   }, {
     min: 15000,
@@ -125,6 +127,7 @@ const update = (timePassedSinceLastRender) => {
   // creating a counter for spawning Planets and Rockets
   CLOUDS.counter -= timePassedSinceLastRender;
   BONUS.counter -= timePassedSinceLastRender;
+  ANIM.planetCounter -= timePassedSinceLastRender;
 
   // creating a coefficient to accelerate the spawning time regarding the HERO position
   if (GAME.state === 'play') {
@@ -145,7 +148,7 @@ const update = (timePassedSinceLastRender) => {
 
   // creating a variable to decrease the size of the planet overtime
   if (GAME.state === 'play') {
-    CLOUDS.sizeDelta -= 0.00003;
+    CLOUDS.sizeDelta -= 0.00004;
     if (CLOUDS.sizeDelta < 0.5) {
       CLOUDS.sizeDelta = 0.5
     }
@@ -160,6 +163,13 @@ const update = (timePassedSinceLastRender) => {
   // .log(Math.floor(randomX), Math.floor(player.x))
   randomY = randomNumberBetween(70, CONFIG.height / 2);
 
+  if (Math.floor(ANIM.counter <= 0)) {
+    let passingPlanet = new BackgroundAnimation(context, canvas, 0, randomStarY, 10, 10, 3, CONFIG);
+    GAME.gameObjects.push(planet);
+    if (Math.floor(ANIM.counter) <= -1)
+      ANIM.planetCounter = randomNumberBetween(ANIM.planetApparitionTimeMin, ANIM.planetApparitionTimeMax);
+  }
+
   if (GAME.state === 'play') {
     // spawn my items when the counter reaches 0
     if (Math.floor(CLOUDS.counter <= 0)) {
@@ -171,12 +181,12 @@ const update = (timePassedSinceLastRender) => {
     }
 
     if (Math.floor(BONUS.counter <= 0)) {
-      let rocket = new Stars(context, canvas, -BONUS.width, randomY, BONUS.width, BONUS.height, 2, CONFIG);
-      GAME.gameObjects.push(rocket);
-      GAME.collectibles.push(rocket);
-      if (Math.floor(BONUS.counter) <= -1)
+       let rocket = new Bonuses(context, canvas, -BONUS.width, randomY, BONUS.width, BONUS.height, CONFIG);
+       GAME.gameObjects.push(rocket);
+       GAME.collectibles.push(rocket);
+       if (Math.floor(BONUS.counter) <= -1)
         BONUS.counter = randomNumberBetween(BONUS.apparitionTimeMin, BONUS.apparitionTimeMax);
-    }
+     }
 
   }
 
