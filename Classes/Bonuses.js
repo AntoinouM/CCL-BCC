@@ -1,7 +1,7 @@
 import GameObject from "./GameObject.js";
 import {
     BONUS
-  } from '/Scripts/globals.js'
+  } from '../Scripts/globals.js'
 
 class Bonuses extends GameObject {
 
